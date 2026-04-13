@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nutrition Plan — 2300 kcal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --b9:#042C53;--b8:#0C447C;--b6:#185FA5;--b4:#378ADD;--b1:#B5D4F4;--b0:#E6F1FB;
+  --t6:#0F6E56;--t1:#9FE1CB;--t0:#E1F5EE;
+  --a6:#BA7517;--a0:#FAEEDA;
+  --r6:#993C1D;--r0:#FAECE7;
+  --g9:#2C2C2A;--g7:#5F5E5A;--g4:#888780;--g2:#D3D1C7;--g1:#F1EFE8;
+  --bg:#FAFAF8;--wh:#ffffff;
+  --serif:'DM Serif Display',Georgia,serif;
+  --sans:'Instrument Sans',sans-serif;
+  --mono:'DM Mono',monospace;
+}
+html{scroll-behavior:smooth}
+body{font-family:var(--sans);background:var(--bg);color:var(--g9);line-height:1.6;min-height:100vh;-webkit-text-size-adjust:100%}
+
+/* HEADER */
+header{background:var(--b9);color:#fff;padding:2.25rem 1.1rem 2rem;position:relative;overflow:hidden}
+header::before{content:'';position:absolute;top:-60px;right:-60px;width:240px;height:240px;border-radius:50%;background:rgba(55,138,221,.15);pointer-events:none}
+header::after{content:'';position:absolute;bottom:-80px;left:-40px;width:200px;height:200px;border-radius:50%;background:rgba(55,138,221,.08);pointer-events:none}
+.hi{max-width:860px;margin:0 auto;position:relative;z-index:1}
+.eye{font-family:var(--mono);font-size:10px;letter-spacing:.15em;color:var(--b1);text-transform:uppercase;margin-bottom:.55rem}
+header h1{font-family:var(--serif);font-size:clamp(1.75rem,6vw,2.9rem);font-weight:400;line-height:1.1;margin-bottom:1.1rem}
+header h1 em{font-style:italic;color:var(--b1)}
+.hstats{display:flex;gap:.6rem;flex-wrap:wrap;margin-top:1.1rem}
+.spill{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);border-radius:100px;padding:4px 12px;font-size:11.5px;display:flex;align-items:center;gap:5px}
+.spill strong{color:#fff}.spill span{color:var(--b1)}
+
+/* TRACKER */
+.tbar{background:var(--wh);border-bottom:1px solid var(--g2);padding:.65rem 1.1rem;position:sticky;top:0;z-index:100;box-shadow:0 1px 8px rgba(0,0,0,.06)}
+.tin{max-width:860px;margin:0 auto;display:flex;align-items:center;gap:.65rem;flex-wrap:wrap}
+.tlbl{font-family:var(--mono);font-size:10px;color:var(--g4);letter-spacing:.1em;text-transform:uppercase;white-space:nowrap;flex-shrink:0}
+.tmacs{display:flex;gap:.75rem;flex:1;flex-wrap:wrap}
+.mlive{display:flex;align-items:center;gap:4px}
+.mlive .dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.mlive .val{font-family:var(--mono);font-size:11px;font-weight:500;color:var(--g9)}
+.mlive .tgt{font-family:var(--mono);font-size:10px;color:var(--g4)}
+.dk{background:var(--b6)}.dp{background:var(--t6)}.dc{background:var(--a6)}.df{background:var(--r6)}
+
+/* PROGRESS BAR */
+.tprog{width:100%;max-width:860px;margin:.3rem auto 0;height:3px;background:var(--g2);border-radius:2px;overflow:hidden}
+.tprogf{height:100%;background:linear-gradient(90deg,var(--b6),var(--t6));border-radius:2px;transition:width .3s ease;width:0%}
+
+/* MAIN */
+main{max-width:860px;margin:0 auto;padding:1.4rem .9rem 3rem}
+
+/* MEAL SECTION */
+.ms{margin-bottom:2.4rem;animation:fu .4s ease both}
+@keyframes fu{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+.mh{display:flex;align-items:center;gap:.65rem;margin-bottom:.9rem;padding-bottom:.55rem;border-bottom:1.5px solid var(--b1);flex-wrap:wrap}
+.mnum{font-family:var(--mono);font-size:10px;color:var(--b6);letter-spacing:.12em;text-transform:uppercase;background:var(--b0);padding:3px 10px;border-radius:100px;white-space:nowrap;flex-shrink:0}
+.mname{font-family:var(--serif);font-size:1.45rem;font-weight:400;color:var(--b9)}
+.mwin{font-family:var(--mono);font-size:10px;color:var(--g4);margin-left:auto;white-space:nowrap}
+
+/* GRID */
+.og{display:grid;grid-template-columns:1fr;gap:1px;background:var(--g2);border:1px solid var(--g2);border-radius:12px;overflow:hidden}
+
+/* CARD */
+.oc{background:var(--wh);cursor:pointer;transition:background .15s;position:relative;-webkit-tap-highlight-color:transparent}
+.oc:hover{background:#f8fbff}
+.oc.sel{background:var(--b0)}
+.oc.sel .cbar{background:var(--b6)}
+.cbar{width:3px;background:var(--g2);position:absolute;left:0;top:0;bottom:0;transition:background .15s}
+
+.ci{padding:.85rem .95rem .85rem 1.2rem;display:flex;gap:.65rem;align-items:flex-start}
+.cl{flex:1;min-width:0}
+.ctr{display:flex;align-items:center;gap:.45rem;margin-bottom:.25rem;flex-wrap:wrap}
+.onum{font-family:var(--mono);font-size:10px;color:var(--g4);letter-spacing:.1em;flex-shrink:0}
+.otitle{font-size:13px;font-weight:600;color:var(--g9)}
+.ft{font-family:var(--mono);font-size:9px;padding:2px 6px;border-radius:100px;letter-spacing:.04em;flex-shrink:0}
+.tc{background:var(--b0);color:var(--b8)}
+.thc{background:var(--a0);color:var(--a6)}
+.thp{background:var(--t0);color:var(--t6)}
+.tq{background:var(--b0);color:var(--b6)}
+.tl{background:var(--r0);color:var(--r6)}
+.tri{background:var(--t0);color:var(--t6)}
+.tpo{background:var(--a0);color:var(--a6)}
+.tpa{background:var(--b0);color:var(--b6)}
+.tco{background:var(--r0);color:var(--r6)}
+.tsi{background:var(--t0);color:var(--t6)}
+.tfa{background:var(--r0);color:var(--r6)}
+.tlg{background:var(--b0);color:var(--b8)}
+
+/* INGREDIENT INPUTS */
+.ings{font-size:12.5px;color:var(--g7);line-height:1.65;list-style:none}
+.ings li::before{content:'— ';color:var(--g4)}
+.ie{display:inline;font-size:12.5px;color:var(--g7);background:transparent;border:none;border-bottom:1px dashed var(--g2);outline:none;font-family:var(--sans);min-width:50px;max-width:95%;padding:0 1px;cursor:text;transition:border-color .15s,background .15s;-webkit-appearance:none}
+.ie:focus{border-bottom-color:var(--b4);background:rgba(55,138,221,.05);border-radius:2px}
+
+.cn{margin-top:.3rem;font-size:11px;color:var(--g4);font-style:italic}
+.cn.w{color:var(--a6)}.cn.a{color:var(--r6)}
+
+/* MACRO MINI */
+.mm{display:grid;grid-template-columns:repeat(2,50px);grid-template-rows:repeat(2,auto);gap:3px;flex-shrink:0}
+@media(min-width:440px){.mm{grid-template-columns:repeat(4,48px);grid-template-rows:1fr}}
+.mc{background:var(--g1);border-radius:6px;padding:4px 3px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:1px}
+.oc.sel .mc{background:var(--wh)}
+
+/* MACRO VALUE INPUTS */
+.mv{font-family:var(--mono);font-size:11.5px;font-weight:500;display:block;line-height:1.2;width:100%;text-align:center;background:transparent;border:none;border-bottom:1px dashed transparent;outline:none;cursor:text;transition:border-color .15s,background .15s;-webkit-appearance:none;padding:0}
+.mv:focus{border-bottom-color:currentColor;background:rgba(0,0,0,.04);border-radius:2px}
+.ml{font-size:8px;color:var(--g4);text-transform:uppercase;letter-spacing:.06em;display:block}
+.vk{color:var(--b6)}.vp{color:var(--t6)}.vc{color:var(--a6)}.vf{color:var(--r6)}
+
+/* SELECTED BADGE */
+.sb{display:none;position:absolute;top:7px;right:9px;font-family:var(--mono);font-size:9px;background:var(--b6);color:#fff;padding:2px 7px;border-radius:100px;letter-spacing:.05em;pointer-events:none}
+.oc.sel .sb{display:block}
+
+/* EDIT HINT */
+.eh{display:flex;align-items:center;gap:5px;margin-top:.6rem;font-family:var(--mono);font-size:10px;color:var(--g4)}
+.ehd{width:5px;height:5px;background:var(--g2);border-radius:50%}
+
+/* SECTION RULE */
+.sr{margin-top:.75rem;padding:.55rem .8rem;background:var(--g1);border-radius:8px;font-size:11.5px;color:var(--g7);line-height:1.5}
+.sr strong{color:var(--g9)}
+
+/* DAILY SUMMARY */
+.dsummary{background:var(--b9);color:#fff;border-radius:14px;padding:1.25rem 1.1rem;margin-top:2.4rem;position:relative;overflow:hidden}
+.dsummary::before{content:'';position:absolute;top:-40px;right:-40px;width:180px;height:180px;border-radius:50%;background:rgba(55,138,221,.12);pointer-events:none}
+.dsh{font-family:var(--mono);font-size:10px;letter-spacing:.12em;color:var(--b1);text-transform:uppercase;margin-bottom:.85rem}
+.dsgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:.6rem}
+@media(min-width:440px){.dsgrid{grid-template-columns:repeat(4,1fr)}}
+.dsm{background:rgba(255,255,255,.08);border-radius:8px;padding:.6rem .5rem;text-align:center}
+.dsm .dsval{font-family:var(--mono);font-size:1.05rem;font-weight:500;display:block;line-height:1.2}
+.dsm .dslbl{font-family:var(--mono);font-size:8.5px;color:var(--b1);text-transform:uppercase;letter-spacing:.06em;display:block;margin-top:2px}
+.dsm .dstgt{font-family:var(--mono);font-size:9px;color:rgba(255,255,255,.35);display:block;margin-top:1px}
+.dsbar{margin-top:.9rem}
+.dsbarlbl{display:flex;justify-content:space-between;font-family:var(--mono);font-size:9.5px;color:var(--b1);margin-bottom:.35rem}
+.dstrack{height:5px;background:rgba(255,255,255,.12);border-radius:3px;overflow:hidden}
+.dsfill{height:100%;background:linear-gradient(90deg,var(--b4),var(--t1));border-radius:3px;transition:width .4s ease;width:0%}
+.dsnote{margin-top:.75rem;font-size:11px;color:rgba(255,255,255,.55);font-style:italic}
+
+footer{border-top:1px solid var(--g2);padding:1.1rem;text-align:center;font-family:var(--mono);font-size:10px;color:var(--g4);letter-spacing:.08em}
+.rbtn{font-family:var(--mono);font-size:10px;color:var(--g4);background:none;border:1px solid var(--g2);border-radius:100px;padding:3px 10px;cursor:pointer;letter-spacing:.06em;transition:color .15s,border-color .15s;flex-shrink:0;-webkit-tap-highlight-color:transparent}
+.rbtn:hover{color:var(--r6);border-color:var(--r6)}
+.rbtn:active{transform:scale(.96)}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="hi">
+    <p class="eye">Cutting Phase · Active Plan</p>
+    <h1>Your <em>Daily</em><br>Nutrition Plan</h1>
+    <div class="hstats">
+      <div class="spill"><strong>2300</strong><span>kcal / day</span></div>
+      <div class="spill"><strong>160–180g</strong><span>protein</span></div>
+      <div class="spill"><strong>5</strong><span>meals / day</span></div>
+    </div>
+  </div>
+</header>
+
+<div class="tbar">
+  <div class="tin">
+    <span class="tlbl">Today</span>
+    <div class="tmacs">
+      <div class="mlive"><div class="dot dk"></div><span class="val" id="tk">0 kcal</span><span class="tgt">/ 2300</span></div>
+      <div class="mlive"><div class="dot dp"></div><span class="val" id="tp">0g</span><span class="tgt">protein</span></div>
+      <div class="mlive"><div class="dot dc"></div><span class="val" id="tc">0g</span><span class="tgt">carbs</span></div>
+      <div class="mlive"><div class="dot df"></div><span class="val" id="tf">0g</span><span class="tgt">fat</span></div>
+    </div>
+    <button class="rbtn" onclick="resetDay()">reset</button>
+  </div>
+  <div class="tprog"><div class="tprogf" id="kprog"></div></div>
+</div>
+
+<main>
+
+<!-- ══ MEAL 1 · BREAKFAST ══ -->
+<section class="ms" data-meal="breakfast">
+  <div class="mh">
+    <span class="mnum">Meal 01</span>
+    <h2 class="mname">Breakfast</h2>
+    <span class="mwin">~400–500 kcal</span>
+  </div>
+  <div class="og" id="grid-breakfast">
+
+    <div class="oc" data-meal="breakfast" onclick="sel(this)">
+      <div class="cbar"></div><span class="sb">selected</span>
+      <div class="ci">
+        <div class="cl">
+          <div class="ctr"><span class="onum">01</span><span class="otitle">The Classic</span><span class="ft tc">classic</span></div>
+          <ul class="ings">
+            <li><input class="ie" value="3 whole eggs + 2 egg whites" onclick="e(event)"></li>
+            <li><input class="ie" value="½ slice brown bread" onclick="e(event)"></li>
+            <li><input class="ie" value="50g labneh" onclick="e(event)"></li>
+          </ul>
+          <p class="cn">Filling and protein-dense. 10 minutes max.</p>
+        </div>
+        <div class="mm">
+          <div class="mc"><input class="mv vk" value="400" onclick="e(event)" data-f="k"><span class="ml">kcal</span></div>
+          <div class="mc"><input class="mv vp" value="33g" onclick="e(event)" data-f="p"><span class="ml">protein</span></div>
+          <div class="mc"><input class="mv vc" value="20g" onclick="e(event)" data-f="c"><span class="ml">carbs</span></div>
+          <div class="mc"><input class="mv vf" value="20g" onclick="e(event)" data-f="f"><span class="ml">fat</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="oc" data-meal="breakfast" onclick="sel(this)">
+      <div class="cbar"></div><span class="sb">selected</span>
+      <div class="ci">
+        <div class="cl">
+          <div class="ctr"><span class="onum">02</span><span class="otitle">Protein Yogurt Bowl</span><span class="ft thc">high carb</span></div>
+          <ul class="ings">
+            <li><input class="ie" value="200g Greek yogurt (2%)" onclick="e(event)"></li>
+            <li><input class="ie" value="40g rolled oats" onclick="e(event)"></li>
+            <li><input class="ie" value="1 small banana" onclick="e(event)"></li>
+          </ul>
+          <p class="cn w">60g carbs — best on training mornings.</p>
+        </div>
+        <div class="mm">
+          <div class="mc"><input class="mv vk" value="450" onclick="e(event)" data-f="k"><span class="ml">kcal</span></div>
+          <div class="mc"><input class="mv vp" value="30g" onclick="e(event)" data-f="p"><span class="ml">protein</span></div>
+          <div class="mc"><input class="mv vc" value="60g" onclick="e(event)" data-f="c"><span class="ml">carbs</span></div>
+          <div class="mc"><input class="mv vf" value="8g"  onclick="e(event)" data-f="f"><span class="ml">fat</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="oc" data-meal="breakfast" onclick="sel(this)">
+      <div class="cbar"></div><span class="sb">selected</span>
+      <div class="ci">
+        <div class="cl">
+          <div class="ctr"><span class="onum">03</span><span class="otitle">Areesh Sandwich</span><span class="ft thp">highest protein</span></div>
+          <ul class="ings">
+            <li><input class="ie" value="150g areesh cheese" onclick="e(event)"></li>
+            <li><input class="ie" value="2 slices brown bread" onclick="e(event)"></li>
+            <li><input class="ie" value="Cucumber / tomato / pepper" onclick="e(event)"></li>
+          </ul>
+          <p class="cn">Max protein, lowest fat. Best for pure cutting.</p>
+        </div>
+        <div class="mm">
+          <div class="mc"><input class="mv vk" value="400" onclick="e(event)" data-f="k"><span class="ml">kcal</span></div>
+          <div class="mc"><input class="mv vp" value="40g" onclick="e(event)" data-f="p"><span class="ml">protein</span></div>
+          <div class="mc"><input class="mv vc" value="30g" onclick="e(event)" data-f="c"><span class="ml">carbs</span></div>
+          <div class="mc"><input class="mv vf" value="5g"  onclick="e(event)" data-f="f"><span class="ml">fat</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="oc" data-meal="breakfast" onclick="sel(this)">
+      <div class="cbar"></div><span class="sb">selected</span>
+      <div class="ci">
+        <div class="cl">
+          <div class="ctr"><span class="onum">04</span><span class="otitle">Quick Sandwich</span><span class="ft tq">portable</span></div>
+          <ul class="ings">
+            <li><input class="ie" value="1 oat / whole wheat wrap" onclick="e(event)"></li>
+            <li><input class="ie" value="2 whole eggs + 2 egg whites" onclick="e(event)"></li>
+            <li><input class="ie" value="30g labneh" onclick="e(event)"></li>
+          </ul>
+          <p class="cn">Prep the night before. Easy on the go.</p>
+        </div>
+        <div class="mm">
+          <div class="mc"><input class="mv vk" value="420" onclick="e(event)" data-f="k"><span class="ml">kcal</span></div>
+          <div class="mc"><input class="mv vp" value="32g" onclick="e(event)" data-f="p"><span class="ml">protein</span></div>
+          <div class="mc"><input class="mv vc" value="30g" onclick="e(event)" data-f="c"><span class="ml">carbs</span></div>
+          <div class="mc"><input class="mv vf" value="15g" onclick="e(event)" data-f="f"><span class="ml">fat</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="oc" data-meal="breakfast" onclick="sel(this)">
+      <div class="cbar"></div><span class="sb">selected</span>
+      <div class="ci">
+        <div class="cl">
+          <div class="ctr"><span class="onum">05</span><span class="otitle">Protein Shake</span><span class="ft tl">liquid</span></div>
+          <ul class="ings">
+            <li><input class="ie" value="300ml low-fat milk" onclick="e(event)"></li>
+            <li><input class="ie" value="1 scoop whey protein" onclick="e(event)"></li>
+            <li><input class="ie" value="30g rolled oats" onclick="e(event)"></li>
+          </ul>
+          <p class="cn a">Less satiating. Add 1 tbsp peanut butter if hungry.</p>
+        </div>
+        <div class="mm">
+          <div class="mc"><input class="mv vk" value="400" onclick="e(event)" data-f="k"><span class="ml">kcal</span></div>
+          <div class="mc"><input class="mv vp" value="37g" onclick="e(event)" data-f="p"><span class="ml">protein</span></div>
+          <div class="mc"><input class="mv vc" value="32g" onclick="e(event)" data-f="c"><span class="ml">carbs</span></div>
+          <div class="mc"><input class="mv vf" value="8g"  onclick="e(event)" data-f="f"><span class="ml">fat</span></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <div class="eh"><div class="ehd"></div> Tap any amount or macro value to edit</div>
+  <p class="sr"><strong>Rule:</strong> All 5 are calorie-matched — pick freely. Priority is always protein first (30g+).</p>
+</section>
+
+<!-- ══ MEAL 2 · LUNCH ══ -->
+<section class="ms" style="animation-delay:.08s" data-meal="lunch">
+  <div class="mh">
+    <span class="mnum">Meal 02</span>
+    <h2 class="mname">Lunch</h2>
+    <span class="mwin">~500–620 kcal</span>
+  </div>
+  <div class="og" id="grid-lunch">
+
+    <div class="oc" data-meal="lunch" onclick="sel(this)">
+      <div class="cbar"></div><span class="sb">selected</span>
+      <div class="ci">
+        <div class="cl">
+          <div class="ctr"><span class="onum">01</span><span class="otitle">Chicken + Rice</span><span class="ft tri">rice</span></div>
+          <ul class="ings">
+            <li><input class="ie" value="200g chicken breast" onclick="e(event)"></li>
+            <li><input class="ie" value="150g rice (cooked)" onclick="e(event)"></li>
+            <li><input class="ie" value="Vegetables (any)" onclick="e(event)"></li>
+          </ul>
+          <p class="cn">Rice 200g → ~565 kcal / 63g protein. Edit macros above.</p>
+        </div>
+        <div class="mm">
+          <div class="mc"><input class="mv vk" value="500" onclick="e(event)" data-f="k"><span class="ml">kcal</span></div>
+          <div class="mc"><input class="mv vp" value="62g" onclick="e(event)" data-f="p"><span class="ml">protein</span></div>
+          <div class="mc"><input class="mv vc" value="42g" onclick="e(event)" data-f="c"><span class="ml">carbs</span></div>
+          <div class="mc"><input class="mv vf" value="7g"  onclick="e(event)" data-f="f"><span class="ml">fat</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="oc" data-meal="lunch" onclick="sel(this)">
+      <div class="cbar"></div><span class="sb">selected</span>
+      <div class="ci">
+        <div class="cl">
+          <div class="ctr"><span class="onum">02</span><span class="otitle">Chicken + Potato</span><span class="ft tpo">potato</span></div>
+          <ul class="ings">
+            <li><input class="ie" value="200g chicken breast" onclick="e(event)"></li>
+            <li><input class="ie" value="250g potato (boiled / baked)" onclick="e(event)"></li>
+            <li><input class="ie" value="Vegetables (any)" onclick="e(event)"></li>
+          </ul>
+          <p class="cn">Best satiety-per-calorie of all options. Potato is very filling.</p>
+        </div>
+        <div class="mm">
+          <div class="mc"><input class="mv vk" value="525" onclick="e(event)" data-f="k"><span class="ml">kcal</span></div>
+          <div class="mc"><input class="mv vp" value="64g" onclick="e(event)" data-f="p"><span class="ml">protein</span></div>
+          <div class="mc"><input class="mv vc" value="52g" onclick="e(event)" data-f="c"><span class="ml">carbs</span></div>
+          <div class="mc"><input class="mv vf" value="7g"  onclick="e(event)" data-f="f"><span class="ml">fat</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="oc" data-meal="lunch" onclick="sel(this)">
+      <div class="cbar"></div><span class="sb">selected</span>
+      <div class="ci">
+        <div class="cl">
+          <div class="ctr"><span class="onum">03</span><span class="otitle">Chicken + Brown Pasta</span><span class="ft tpa">pasta</span></div>
+          <ul class="ings">
+            <li><input class="ie" value="200g chicken breast" onclick="e(event)"></li>
+            <li><input class="ie" value="180g brown pasta (cooked)" onclick="e(event)"></li>
+            <li><input class="ie" value="Vegetables (any)" onclick="e(event)"></li>
+          </ul>
+          <p class="cn">Pasta 220g → ~620 kcal / 69g protein. Edit macros above.</p>
+        </div>
+        <div class="mm">
+          <div class="mc"><input class="mv vk" value="560" onclick="e(event)" data-f="k"><span class="ml">kcal</span></div>
+          <div class="mc"><input class="mv vp" value="67g" onclick="e(event)" data-f="p"><span class="ml">protein</span></div>
+          <div class="mc"><input class="mv vc" value="49g" onclick="e(event)" data-f="c"><span class="ml">carbs</span></div>
+          <div class="mc"><input class="mv vf" value="9g"  onclick="e(event)" data-f="f"><span class="ml">fat</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="oc" data-meal="lunch" onclick="sel(this)">
+      <div class="cbar"></div><span class="sb">selected</span>
+      <div class="ci">
+        <div class="cl">
+          <div class="ctr"><span class="onum">04</span><span class="otitle">Chicken + Rice + Greek Yogurt</span><span class="ft tco">highest protein</span></div>
+          <ul class="ings">
+            <li><input class="ie" value="180g chicken breast" onclick="e(event)"></li>
+            <li><input class="ie" value="150g rice (cooked)" onclick="e(event)"></li>
+            <li><input class="ie" value="150g Greek yogurt (0%)" onclick="e(event)"></li>
+          </ul>
+          <p class="cn w">Macros vary by yogurt type — tap values above to update.</p>
+        </div>
+        <div class="mm">
+          <div class="mc"><input class="mv vk" value="565" onclick="e(event)" data-f="k"><span class="ml">kcal</span></div>
+          <div class="mc"><input class="mv vp" value="68g" onclick="e(event)" data-f="p"><span class="ml">protein</span></div>
+          <div class="mc"><input class="mv vc" value="46g" onclick="e(event)" data-f="c"><span class="ml">carbs</span></div>
+          <div class="mc"><input class="mv vf" value="9g"  onclick="e(event)" data-f="f"><span class="ml">fat</span></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <div class="eh"><div class="ehd"></div> Tap any amount or macro value to edit</div>
+  <p class="sr"><strong>Rule:</strong> All chicken-based for consistency. Pick by which carb source you have available.</p>
+</section>
+
+<!-- ══ MEAL 3 · SNACK ══ -->
+<section class="ms" style="animation-delay:.12s" data-meal="snack">
+  <div class="mh">
+    <span class="mnum">Meal 03</span>
+    <h2 class="mname">Snack</h2>
+    <span class="mwin">~250–400 kcal</span>
+  </div>
+  <div class="og" id="grid-snack">
+
+    <div class="oc" data-meal="snack" onclick="sel(this)">
+      <div class="cbar"></div><span class="sb">selected</span>
+      <div class="ci">
+        <div class="cl">
+          <div class="ctr"><span class="onum">01</span><span class="otitle">Protein Shake</span><span class="ft tl">liquid</span></div>
+          <ul class="ings">
+            <li><input class="ie" value="200ml low-fat milk" onclick="e(event)"></li>
+            <li><input class="ie" value="1 scoop whey protein" onclick="e(event)"></li>
+            <li><input class="ie" value="35g rolled oats" onclick="e(event)"></li>
+          </ul>
+          <p class="cn">Fast, portable. Best pre- or post-workout.</p>
+        </div>
+        <div class="mm">
+          <div class="mc"><input class="mv vk" value="385" onclick="e(event)" data-f="k"><span class="ml">kcal</span></div>
+          <div class="mc"><input class="mv vp" value="36g" onclick="e(event)" data-f="p"><span class="ml">protein</span></div>
+          <div class="mc"><input class="mv vc" value="35g" onclick="e(event)" data-f="c"><span class="ml">carbs</span></div>
+          <div class="mc"><input class="mv vf" value="7g"  onclick="e(event)" data-f="f"><span class="ml">fat</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="oc" data-meal="snack" onclick="sel(this)">
+      <div class="cbar"></div><span class="sb">selected</span>
+      <div class="ci">
+        <div class="cl">
+          <div class="ctr"><span class="onum">02</span><span class="otitle">Greek Yogurt Bowl</span><span class="ft thp">satisfying</span></div>
+          <ul class="ings">
+            <li><input class="ie" value="200g Greek yogurt (0–2%)" onclick="e(event)"></li>
+            <li><input class="ie" value="1 small banana" onclick="e(event)"></li>
+            <li><input class="ie" value="10g chia seeds" onclick="e(event)"></li>
+          </ul>
+          <p class="cn">Chia adds omega-3 and fiber — keeps you full longer. Swap for 10g peanut butter if preferred.</p>
+        </div>
+        <div class="mm">
+          <div class="mc"><input class="mv vk" value="300" onclick="e(event)" data-f="k"><span class="ml">kcal</span></div>
+          <div class="mc"><input class="mv vp" value="22g" onclick="e(event)" data-f="p"><span class="ml">protein</span></div>
+          <div class="mc"><input class="mv vc" value="32g" onclick="e(event)" data-f="c"><span class="ml">carbs</span></div>
+          <div class="mc"><input class="mv vf" value="7g"  onclick="e(event)" data-f="f"><span class="ml">fat</span></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <div class="eh"><div class="ehd"></div> Tap any amount or macro value to edit</div>
+  <p class="sr"><strong>Rule:</strong> Pick Shake on training days for fast absorption. Pick Yogurt Bowl on rest days for better satiety.</p>
+</section>
+
+<!-- ══ MEAL 4 · DINNER ══ -->
+<section class="ms" style="animation-delay:.16s" data-meal="dinner">
+  <div class="mh">
+    <span class="mnum">Meal 04</span>
+    <h2 class="mname">Dinner</h2>
+    <span class="mwin">~350–550 kcal</span>
+  </div>
+  <div class="og" id="grid-dinner">
+
+    <div class="oc" data-meal="dinner" onclick="sel(this)">
+      <div class="cbar"></div><span class="sb">selected</span>
+      <div class="ci">
+        <div class="cl">
+          <div class="ctr"><span class="onum">01</span><span class="otitle">Chicken + Potato</span><span class="ft tpo">best satiety</span></div>
+          <ul class="ings">
+            <li><input class="ie" value="200g chicken breast" onclick="e(event)"></li>
+            <li><input class="ie" value="250g potato (boiled / baked)" onclick="e(event)"></li>
+            <li><input class="ie" value="Vegetables (any)" onclick="e(event)"></li>
+          </ul>
+          <p class="cn">Boiled potato ranks #1 on the Satiety Index — keeps you full through the night.</p>
+        </div>
+        <div class="mm">
+          <div class="mc"><input class="mv vk" value="520" onclick="e(event)" data-f="k"><span class="ml">kcal</span></div>
+          <div class="mc"><input class="mv vp" value="62g" onclick="e(event)" data-f="p"><span class="ml">protein</span></div>
+          <div class="mc"><input class="mv vc" value="52g" onclick="e(event)" data-f="c"><span class="ml">carbs</span></div>
+          <div class="mc"><input class="mv vf" value="7g"  onclick="e(event)" data-f="f"><span class="ml">fat</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="oc" data-meal="dinner" onclick="sel(this)">
+      <div class="cbar"></div><span class="sb">selected</span>
+      <div class="ci">
+        <div class="cl">
+          <div class="ctr"><span class="onum">02</span><span class="otitle">Eggs + Areesh</span><span class="ft thp">high protein</span></div>
+          <ul class="ings">
+            <li><input class="ie" value="3 whole eggs + 2 egg whites" onclick="e(event)"></li>
+            <li><input class="ie" value="150g areesh / low-fat cottage cheese" onclick="e(event)"></li>
+            <li><input class="ie" value="Cucumber / tomato" onclick="e(event)"></li>
+          </ul>
+          <p class="cn">Eggs contain casein-like slow-digesting protein — ideal at night for muscle retention.</p>
+        </div>
+        <div class="mm">
+          <div class="mc"><input class="mv vk" value="460" onclick="e(event)" data-f="k"><span class="ml">kcal</span></div>
+          <div class="mc"><input class="mv vp" value="55g" onclick="e(event)" data-f="p"><span class="ml">protein</span></div>
+          <div class="mc"><input class="mv vc" value="8g"  onclick="e(event)" data-f="c"><span class="ml">carbs</span></div>
+          <div class="mc"><input class="mv vf" value="20g" onclick="e(event)" data-f="f"><span class="ml">fat</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="oc" data-meal="dinner" onclick="sel(this)">
+      <div class="cbar"></div><span class="sb">selected</span>
+      <div class="ci">
+        <div class="cl">
+          <div class="ctr"><span class="onum">03</span><span class="otitle">Tuna + Bread</span><span class="ft tq">light</span></div>
+          <ul class="ings">
+            <li><input class="ie" value="1 can (140g drained) tuna in water" onclick="e(event)"></li>
+            <li><input class="ie" value="2 slices brown bread" onclick="e(event)"></li>
+            <li><input class="ie" value="Salad + lemon + mustard" onclick="e(event)"></li>
+          </ul>
+          <p class="cn">Use tuna in water/brine only — oil adds ~100 kcal. Mustard instead of mayo saves ~80 kcal.</p>
+        </div>
+        <div class="mm">
+          <div class="mc"><input class="mv vk" value="330" onclick="e(event)" data-f="k"><span class="ml">kcal</span></div>
+          <div class="mc"><input class="mv vp" value="38g" onclick="e(event)" data-f="p"><span class="ml">protein</span></div>
+          <div class="mc"><input class="mv vc" value="28g" onclick="e(event)" data-f="c"><span class="ml">carbs</span></div>
+          <div class="mc"><input class="mv vf" value="4g"  onclick="e(event)" data-f="f"><span class="ml">fat</span></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <div class="eh"><div class="ehd"></div> Tap any amount or macro value to edit</div>
+  <p class="sr"><strong>Rule:</strong> If you trained today, pick Chicken + Potato for carb replenishment. Rest day? Eggs + Areesh is lower carb and ideal. Tuna is your lowest-calorie option when you're close to your limit.</p>
+</section>
+
+<!-- ══ MEAL 5 · LATE SNACK ══ -->
+<section class="ms" style="animation-delay:.2s" data-meal="latesnack">
+  <div class="mh">
+    <span class="mnum">Meal 05</span>
+    <h2 class="mname">Late Snack</h2>
+    <span class="mwin">~200–320 kcal</span>
+  </div>
+  <div class="og" id="grid-latesnack">
+
+    <div class="oc" data-meal="latesnack" onclick="sel(this)">
+      <div class="cbar"></div><span class="sb">selected</span>
+      <div class="ci">
+        <div class="cl">
+          <div class="ctr"><span class="onum">01</span><span class="otitle">Areesh + Bread</span><span class="ft thp">high protein</span></div>
+          <ul class="ings">
+            <li><input class="ie" value="120g areesh / low-fat cottage" onclick="e(event)"></li>
+            <li><input class="ie" value="1–2 slices brown bread" onclick="e(event)"></li>
+            <li><input class="ie" value="Cucumber / tomato" onclick="e(event)"></li>
+          </ul>
+          <p class="cn">Areesh (cottage-style) is high in casein — slow-digesting protein that feeds muscles overnight.</p>
+        </div>
+        <div class="mm">
+          <div class="mc"><input class="mv vk" value="265" onclick="e(event)" data-f="k"><span class="ml">kcal</span></div>
+          <div class="mc"><input class="mv vp" value="30g" onclick="e(event)" data-f="p"><span class="ml">protein</span></div>
+          <div class="mc"><input class="mv vc" value="22g" onclick="e(event)" data-f="c"><span class="ml">carbs</span></div>
+          <div class="mc"><input class="mv vf" value="4g"  onclick="e(event)" data-f="f"><span class="ml">fat</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="oc" data-meal="latesnack" onclick="sel(this)">
+      <div class="cbar"></div><span class="sb">selected</span>
+      <div class="ci">
+        <div class="cl">
+          <div class="ctr"><span class="onum">02</span><span class="otitle">Eggs + Labneh</span><span class="ft tc">classic</span></div>
+          <ul class="ings">
+            <li><input class="ie" value="2 whole eggs + 2 egg whites" onclick="e(event)"></li>
+            <li><input class="ie" value="30g labneh" onclick="e(event)"></li>
+          </ul>
+          <p class="cn">Low carb, satisfying. Egg whites are essentially pure protein — 10–11g each.</p>
+        </div>
+        <div class="mm">
+          <div class="mc"><input class="mv vk" value="245" onclick="e(event)" data-f="k"><span class="ml">kcal</span></div>
+          <div class="mc"><input class="mv vp" value="23g" onclick="e(event)" data-f="p"><span class="ml">protein</span></div>
+          <div class="mc"><input class="mv vc" value="3g"  onclick="e(event)" data-f="c"><span class="ml">carbs</span></div>
+          <div class="mc"><input class="mv vf" value="14g" onclick="e(event)" data-f="f"><span class="ml">fat</span></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <div class="eh"><div class="ehd"></div> Tap any amount or macro value to edit</div>
+  <p class="sr"><strong>Rule:</strong> Always eat this snack — skipping it risks overnight muscle breakdown on a calorie deficit. Both are low enough in calories to not disrupt the plan.</p>
+</section>
+
+<!-- ══ DAILY SUMMARY ══ -->
+<div class="dsummary">
+  <p class="dsh">Day Summary</p>
+  <div class="dsgrid">
+    <div class="dsm"><span class="dsval" id="ds-k">0</span><span class="dslbl">kcal</span><span class="dstgt">/ 2300</span></div>
+    <div class="dsm"><span class="dsval" id="ds-p">0g</span><span class="dslbl">protein</span><span class="dstgt">/ 170g target</span></div>
+    <div class="dsm"><span class="dsval" id="ds-c">0g</span><span class="dslbl">carbs</span><span class="dstgt">est. ~200g</span></div>
+    <div class="dsm"><span class="dsval" id="ds-f">0g</span><span class="dslbl">fat</span><span class="dstgt">est. ~65g</span></div>
+  </div>
+  <div class="dsbar">
+    <div class="dsbarlbl"><span id="ds-pct">0% of daily target</span><span id="ds-meals">0 / 5 meals selected</span></div>
+    <div class="dstrack"><div class="dsfill" id="ds-bar"></div></div>
+  </div>
+  <p class="dsnote" id="ds-note">Select your meals above to see today's total.</p>
+</div>
+
+</main>
+<footer>2300 kcal · 160–180g protein · cutting phase</footer>
+
+<script>
+var MEALS=['breakfast','lunch','snack','dinner','latesnack'];
+
+/* ── UTILS ── */
+function e(ev){ev.stopPropagation()}
+function readNum(inp){return parseFloat(inp.value.replace(/[^0-9.]/g,''))||0}
+
+/* ── SAVE to localStorage ── */
+function save(){
+  var state={};
+  MEALS.forEach(function(meal){
+    var grid=document.getElementById('grid-'+meal);
+    if(!grid)return;
+    var sel=grid.querySelector('.oc.sel');
+    if(sel){
+      var idx=Array.from(grid.querySelectorAll('.oc')).indexOf(sel);
+      state[meal]={sel:idx,macros:{}};
+      sel.querySelectorAll('.mv[data-f]').forEach(function(inp){
+        state[meal].macros[inp.dataset.f]=inp.value;
+      });
+      sel.querySelectorAll('.ie').forEach(function(inp,i){
+        state[meal].macros['ie'+i]=inp.value;
+      });
+    } else {
+      state[meal]=null;
+    }
+  });
+  try{localStorage.setItem('np_state',JSON.stringify(state));}catch(err){}
+}
+
+/* ── RESTORE from localStorage ── */
+function restore(){
+  var raw;
+  try{raw=localStorage.getItem('np_state');}catch(err){return}
+  if(!raw)return;
+  var state=JSON.parse(raw);
+  MEALS.forEach(function(meal){
+    if(!state[meal])return;
+    var grid=document.getElementById('grid-'+meal);
+    if(!grid)return;
+    var cards=grid.querySelectorAll('.oc');
+    var card=cards[state[meal].sel];
+    if(!card)return;
+    card.classList.add('sel');
+    // restore macro inputs
+    card.querySelectorAll('.mv[data-f]').forEach(function(inp){
+      if(state[meal].macros[inp.dataset.f]!==undefined)inp.value=state[meal].macros[inp.dataset.f];
+    });
+    // restore ingredient inputs
+    card.querySelectorAll('.ie').forEach(function(inp,i){
+      if(state[meal].macros['ie'+i]!==undefined)inp.value=state[meal].macros['ie'+i];
+    });
+  });
+  updateTracker();
+}
+
+/* ── SELECT ── */
+function sel(card){
+  var meal=card.dataset.meal;
+  var grid=document.getElementById('grid-'+meal);
+  if(!grid)return;
+  grid.querySelectorAll('.oc').forEach(function(c){c.classList.remove('sel')});
+  card.classList.add('sel');
+  updateTracker();
+  save();
+}
+
+/* ── RESET ── */
+function resetDay(){
+  document.querySelectorAll('.oc.sel').forEach(function(c){c.classList.remove('sel')});
+  try{localStorage.removeItem('np_state');}catch(err){}
+  updateTracker();
+}
+
+/* ── TRACKER ── */
+function updateTracker(){
+  var k=0,p=0,c=0,f=0,meals=0;
+  document.querySelectorAll('.oc.sel').forEach(function(card){
+    meals++;
+    card.querySelectorAll('.mv[data-f]').forEach(function(inp){
+      var v=readNum(inp),field=inp.getAttribute('data-f');
+      if(field==='k')k+=v;
+      else if(field==='p')p+=v;
+      else if(field==='c')c+=v;
+      else if(field==='f')f+=v;
+    });
+  });
+  document.getElementById('tk').textContent=Math.round(k)+' kcal';
+  document.getElementById('tp').textContent=Math.round(p)+'g';
+  document.getElementById('tc').textContent=Math.round(c)+'g';
+  document.getElementById('tf').textContent=Math.round(f)+'g';
+  var pct=Math.min(k/2300*100,100);
+  document.getElementById('kprog').style.width=pct+'%';
+  document.getElementById('ds-k').textContent=Math.round(k);
+  document.getElementById('ds-p').textContent=Math.round(p)+'g';
+  document.getElementById('ds-c').textContent=Math.round(c)+'g';
+  document.getElementById('ds-f').textContent=Math.round(f)+'g';
+  document.getElementById('ds-bar').style.width=pct+'%';
+  document.getElementById('ds-pct').textContent=Math.round(pct)+'% of daily target';
+  document.getElementById('ds-meals').textContent=meals+' / 5 meals selected';
+  var note='';
+  if(meals===0){note='Select your meals above to see today\'s total.';}
+  else if(meals<5){note='Keep going — '+(5-meals)+' meal'+(5-meals>1?'s':'')+' still to select.';}
+  else if(k<2100){note='Total is under 2100 kcal — consider adding a small snack or upsizing a meal.';}
+  else if(k>2450){note='Over target by '+Math.round(k-2300)+' kcal — consider a lighter option for one meal.';}
+  else if(p<150){note='Protein is a bit low at '+Math.round(p)+'g — try to hit 160g+ for best muscle retention.';}
+  else{note='Solid day \u2014 '+Math.round(k)+' kcal, '+Math.round(p)+'g protein. On track.';}
+  document.getElementById('ds-note').textContent=note;
+}
+
+/* ── EVENTS ── */
+document.addEventListener('input',function(ev){
+  if(ev.target.classList.contains('mv')||ev.target.classList.contains('ie')){
+    updateTracker();
+    save();
+  }
+});
+
+/* ── INIT ── */
+restore();
+</script>
+</body>
+</html>
