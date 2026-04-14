@@ -665,11 +665,36 @@ function sel(card){
   updateTracker();
   save();
 }
+<script>
+var MEALS=['breakfast','lunch','snack','dinner','latesnack'];
+
+/* ── UTILS ── */
+function e(ev){ev.stopPropagation()}
+function readNum(inp){return parseFloat(inp.value.replace(/[^0-9.]/g,''))||0}
+
+/* store original values once */
+function cacheDefaults(){
+  document.querySelectorAll('.mv, .ie').forEach(function(inp){
+    inp.dataset.defaultValue = inp.value;
+  });
+}
 
 /* ── RESET ── */
 function resetDay(){
-  document.querySelectorAll('.oc.sel').forEach(function(c){c.classList.remove('sel')});
-  try{localStorage.removeItem('np_state');}catch(err){}
+  document.querySelectorAll('.oc.sel').forEach(function(c){
+    c.classList.remove('sel');
+  });
+
+  document.querySelectorAll('.mv, .ie').forEach(function(inp){
+    if(inp.dataset.defaultValue !== undefined){
+      inp.value = inp.dataset.defaultValue;
+    }
+  });
+
+  try{
+    localStorage.removeItem('np_state');
+  }catch(err){}
+
   updateTracker();
 }
 
@@ -718,6 +743,7 @@ document.addEventListener('input',function(ev){
 });
 
 /* ── INIT ── */
+cacheDefaults();
 restore();
 </script>
 </body>
